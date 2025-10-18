@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Logs</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <a href="users.html">Users</a>
+      <a href="logs.html" class="active">Logs</a>
+      <span class="badge">API: /api/logs.php</span>
+      <!-- ✅ زر الخروج -->
+      <button id="logoutBtn" class="btn btn--ghost" style="margin-left:auto">Logout</button>
+    </nav>
+
+    <div id="alert" class="alert"></div>
+
+    <div class="card">
+      <h2>System Logs</h2>
+      <div class="table-wrap">
+        <table id="logsTable">
+          <thead>
+            <tr><th>ID</th><th>User</th><th>Action</th><th>Details</th><th>Date</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/logs.js"></script>
+
+  <!-- ✅ مستمع محلي لزر الخروج -->
+  <script>
+    (function () {
+      const btn = document.getElementById('logoutBtn');
+      if (!btn || btn.dataset.bound === '1') return;
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', async () => {
+        try { await fetch('../api/logout.php', { method: 'POST' }); } catch (e) {}
+        localStorage.removeItem('user_id');
+        localStorage.removeItem('username');
+        location.href = 'login.html'; // أو index.html
+      }, { once: true });
+    })();
+  </script>
+</body>
+</html>

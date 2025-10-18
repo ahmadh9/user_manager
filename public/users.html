@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Manager</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <a href="users.html" class="active">Users</a>
+      <a href="logs.html">Logs</a>
+      <span class="badge">API: /api/users.php</span>
+      <!-- ✅ زر الخروج -->
+      <button id="logoutBtn" class="btn btn--ghost" style="margin-left:auto">Logout</button>
+    </nav>
+
+    <div id="alert" class="alert"></div>
+
+    <div class="card">
+      <h2>Add User</h2>
+      <form id="addUserForm" class="inline">
+        <input name="name" placeholder="Name" required />
+        <input name="age" type="number" placeholder="Age" required />
+        <input name="email" type="email" placeholder="Email" required />
+        <button class="btn btn--primary" type="submit">Add</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Users</h2>
+      <div class="table-wrap">
+        <table id="usersTable">
+          <thead>
+            <tr><th>ID</th><th>Name</th><th>Age</th><th>Email</th><th>Actions</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/users.js"></script>
+
+  <!-- ✅ مستمع محلي لزر الخروج (يحمي من التكرار لو في مستمع آخر) -->
+  <script>
+    (function () {
+      const btn = document.getElementById('logoutBtn');
+      if (!btn || btn.dataset.bound === '1') return;
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', async () => {
+        try { await fetch('../api/logout.php', { method: 'POST' }); } catch (e) {}
+        localStorage.removeItem('user_id');
+        localStorage.removeItem('username');
+        location.href = 'index.html'; // أو index.html
+      }, { once: true });
+    })();
+  </script>
+</body>
+</html>

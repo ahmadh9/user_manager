@@ -1,0 +1,62 @@
+:root{
+  --bg:#0f1220; --card:#151933; --muted:#9aa3b2; --text:#e8ecf3;
+  --accent:#7c9cff; --accent-2:#66d9a3; --danger:#ff6b6b; --warn:#ffca69;
+  --border:#22284b;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:linear-gradient(180deg,#0d1020 0%,#0b0f1a 100%);
+  color:var(--text); font:14px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
+}
+.container{max-width:960px;margin:32px auto;padding:0 16px}
+.nav{
+  display:flex;gap:12px;align-items:center;margin-bottom:16px
+}
+.nav a{
+  padding:8px 12px;border:1px solid var(--border);border-radius:8px;
+  text-decoration:none;color:var(--text);background:rgba(255,255,255,0.02)
+}
+.nav a.active{border-color:var(--accent);box-shadow:0 0 0 2px rgba(124,156,255,.2) inset}
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px
+}
+h2{margin:0 0 12px 0;font-size:18px}
+form.inline{
+  display:flex;gap:12px;flex-wrap:wrap
+}
+input,button{
+  border-radius:8px;border:1px solid var(--border);background:#0f1330;color:var(--text)
+}
+input{padding:10px 12px;min-width:180px}
+button{
+  padding:10px 14px;cursor:pointer;transition:transform .05s ease,opacity .2s
+}
+button:active{transform:translateY(1px)}
+.btn{background:#121742}
+.btn--primary{border-color:var(--accent)}
+.btn--danger{border-color:var(--danger)}
+.btn--ghost{background:transparent}
+.table-wrap{overflow:auto;border-radius:10px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;background:#0f1330}
+th,td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}
+thead th{position:sticky;top:0;background:#0e1333}
+.actions{display:flex;gap:8px}
+.badge{padding:2px 8px;border-radius:999px;border:1px solid var(--border);font-size:12px;color:var(--muted)}
+/* شريط تنبيه للأخطاء */
+.alert{
+  display:none;margin-bottom:12px;padding:10px 12px;border:1px solid var(--danger);
+  color:#ffdede;background:rgba(255,107,107,.08);border-radius:10px
+}
+.alert.show{display:block}
+/* حالة التعديل */
+tr.editing{
+  background:linear-gradient(90deg,rgba(124,156,255,.08),transparent);
+  position:relative
+}
+tr.editing::after{
+  content:'Editing…'; position:absolute; right:8px; top:-8px; font-size:11px;
+  color:var(--accent); background:#0b0f1a; border:1px solid var(--accent); padding:2px 6px; border-radius:8px
+}
+/* زر الحفظ أثناء التعديل */
+button.saving{opacity:.7;pointer-events:none}
