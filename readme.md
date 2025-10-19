@@ -56,15 +56,18 @@ user_manager/
 
 3) Create a database named `user_manager` and **import** `database.sql` (phpMyAdmin → Import).
 
-4) Edit `user_manager/config.php` with your DB credentials:
+
+4) **Copy** `config.sample.php` to `config.php` and fill your DB credentials:
 ```php
 <?php
+// config.php (local, do NOT commit this file)
 $DB_HOST = 'localhost';
 $DB_USER = 'root';
-$DB_PASS = '';         // your MySQL password if any
+$DB_PASS = '';         // your local MySQL password if any
 $DB_NAME = 'user_manager';
 $mysqli = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
 ```
+> Make sure `config.php` is **gitignored**; the repo should only contain `config.sample.php`.
 > Ensure no PHP warnings/notices leak to output; all endpoints must return valid JSON.
 
 5) Open the app:
