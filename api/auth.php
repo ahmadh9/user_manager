@@ -32,20 +32,21 @@ if (!password_verify($password, $user['password'])) {
     json_error('Wrong password', 401);
 }
 
-/* تثبيت الجلسة للفاعل */
+
+//نثبت الجلسة
 session_regenerate_id(true);
 $_SESSION['user_id']   = (int)$user['id'];
 $_SESSION['username']  = $user['username'];
 
-/* تسجيل حدث تسجيل الدخول */
+//نسجل الاكشن كتسجيل دخول 
 $details = json_encode([
     'user_id'  => (int)$user['id'],
     'username' => $user['username']
-], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+]);
 
 log_action($mysqli, (int)$user['id'], 'auth.login', $details);
 
-/* الرد */
+
 json_ok([
     'user_id'  => (int)$user['id'],
     'username' => $user['username']

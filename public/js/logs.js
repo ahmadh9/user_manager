@@ -1,16 +1,8 @@
-// ====== Config ======
+
 const LOGS_API   = '../api/logs.php';
 const LOGOUT_API = '../api/logout.php';
-const REQUIRE_AUTH = true; // حماية واجهة خفيفة
 
-// ====== Optional front-guard ======
-if (REQUIRE_AUTH && !localStorage.getItem('user_id')) {
-  const btn = document.getElementById('logoutBtn');
-  if (btn) { btn.textContent = 'Login'; btn.onclick = () => location.href = 'index.html'; }
-  location.href = 'index.html';
-}
 
-// ====== UI helpers ======
 const alertBox = document.getElementById('alert');
 function showAlert(msg){
   alertBox.textContent = msg;
@@ -34,14 +26,11 @@ function setupAuthButton(){
         location.href = 'index.html';
       }, { once: true });
     }
-  } else {
-    btn.textContent = 'Login';
-    btn.onclick = () => { location.href = 'index.html'; };
-  }
+  } 
 }
 setupAuthButton();
 
-// ====== Data loader ======
+// تحميل اللوقز
 async function loadLogs() {
   const res = await fetch(LOGS_API + '?t=' + Date.now());
   const data = await res.json();
@@ -69,6 +58,6 @@ async function loadLogs() {
   });
 }
 
-// ====== Bootstrap ======
+//جلب عند التشغيل
 loadLogs();
 

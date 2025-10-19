@@ -5,11 +5,11 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
 $uid = $_SESSION['user_id'] ?? null;
 if ($uid) {
-    $details = json_encode(['user_id'=>(int)$uid,'username'=>($_SESSION['username']??null)], JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+    $details = json_encode(['user_id'=>(int)$uid,'username'=>($_SESSION['username']??null)]);
     log_action($mysqli, (int)$uid, 'auth.logout', $details);
 }
 
-/* إنهاء الجلسة */
+
 $_SESSION = [];
 if (ini_get('session.use_cookies')) {
     $p = session_get_cookie_params();

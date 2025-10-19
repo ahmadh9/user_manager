@@ -11,7 +11,8 @@ body{
 }
 .container{max-width:960px;margin:32px auto;padding:0 16px}
 .nav{
-  display:flex;gap:12px;align-items:center;margin-bottom:16px
+  display:flex;gap:12px;align-items:center;margin-bottom:16px;
+  flex-wrap:wrap; /* ⬅️ لو Nav طويل */
 }
 .nav a{
   padding:8px 12px;border:1px solid var(--border);border-radius:8px;
@@ -28,7 +29,19 @@ form.inline{
 input,button{
   border-radius:8px;border:1px solid var(--border);background:#0f1330;color:var(--text)
 }
-input{padding:10px 12px;min-width:180px}
+input{
+  padding:10px 12px;
+  min-width:120px; /* ⬅️ قللنا من 180px */
+  max-width:100%; /* ⬅️ ما يطلع برّا الخلية */
+  width: auto;
+}
+
+/* ⬇️ تحديد عرض الـ inputs داخل الجدول */
+table input{
+  width: 100%;
+  max-width: 150px; /* ⬅️ حد أقصى للعرض */
+  min-width: 80px;
+}
 button{
   padding:10px 14px;cursor:pointer;transition:transform .05s ease,opacity .2s
 }
@@ -37,26 +50,101 @@ button:active{transform:translateY(1px)}
 .btn--primary{border-color:var(--accent)}
 .btn--danger{border-color:var(--danger)}
 .btn--ghost{background:transparent}
-.table-wrap{overflow:auto;border-radius:10px;border:1px solid var(--border)}
-table{width:100%;border-collapse:collapse;background:#0f1330}
-th,td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}
-thead th{position:sticky;top:0;background:#0e1333}
+
+/* ⬇️ الحل الرئيسي: السكرول الأفقي */
+.table-wrap{
+  overflow-x: auto; /* ⬅️ سكرول أفقي */
+  overflow-y: visible;
+  border-radius:10px;
+  border:1px solid var(--border);
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch; /* سلاسة بالموبايل */
+}
+
+table{
+  width:100%;
+  min-width: 700px; /* ⬅️ يفرض السكرول لما الشاشة صغيرة */
+  border-collapse:collapse;
+  background:#0f1330;
+}
+
+th,td{
+  padding:10px 12px;
+  border-bottom:1px solid var(--border);
+  text-align:left;
+  /* ⬅️ شلنا white-space:nowrap عشان النص يلتف إذا العمود ضيق */
+}
+
+thead th{
+  position:sticky;
+  top:0;
+  background:#0e1333;
+  z-index: 1; /* ⬅️ يضل فوق لما تسكرول */
+}
+
+/* ⬇️ تحسينات للأعمدة */
+#logsTable th:nth-child(1),
+#logsTable td:nth-child(1) { width: 60px; } /* ID */
+
+#logsTable th:nth-child(2),
+#logsTable td:nth-child(2) { min-width: 100px; } /* User */
+
+#logsTable th:nth-child(3),
+#logsTable td:nth-child(3) { min-width: 120px; } /* Action */
+
+#logsTable th:nth-child(4),
+#logsTable td:nth-child(4) { min-width: 200px; } /* Details */
+
+#logsTable th:nth-child(5),
+#logsTable td:nth-child(5) { 
+  min-width: 160px; /* Created At */
+  white-space: nowrap; /* ⬅️ التاريخ ما يلتف */
+}
+
 .actions{display:flex;gap:8px}
 .badge{padding:2px 8px;border-radius:999px;border:1px solid var(--border);font-size:12px;color:var(--muted)}
+
 /* شريط تنبيه للأخطاء */
 .alert{
   display:none;margin-bottom:12px;padding:10px 12px;border:1px solid var(--danger);
   color:#ffdede;background:rgba(255,107,107,.08);border-radius:10px
 }
 .alert.show{display:block}
+
 /* حالة التعديل */
 tr.editing{
   background:linear-gradient(90deg,rgba(124,156,255,.08),transparent);
   position:relative
 }
 tr.editing::after{
-  content:'Editing…'; position:absolute; right:8px; top:-8px; font-size:11px;
-  color:var(--accent); background:#0b0f1a; border:1px solid var(--accent); padding:2px 6px; border-radius:8px
+  content:'Editing…'; 
+  position:absolute; 
+  right:8px; 
+  top:8px; /* ⬅️ بدل -8px، حطيناها جوا الصف */
+  font-size:11px;
+  color:var(--accent); 
+  background:#0b0f1a; 
+  border:1px solid var(--accent); 
+  padding:2px 6px; 
+  border-radius:8px;
+  z-index: 10; /* ⬅️ يظهر فوق المحتوى */
 }
+
 /* زر الحفظ أثناء التعديل */
 button.saving{opacity:.7;pointer-events:none}
+
+/* ⬇️ شريط السكرول الأفقي (اختياري - تحسين المظهر) */
+.table-wrap::-webkit-scrollbar {
+  height: 8px;
+}
+.table-wrap::-webkit-scrollbar-track {
+  background: #0f1330;
+  border-radius: 10px;
+}
+.table-wrap::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 10px;
+}
+.table-wrap::-webkit-scrollbar-thumb:hover {
+  background: #9cb4ff;
+}
